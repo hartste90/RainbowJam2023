@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            Debug.Log("Mouse button is down");
+            // Debug.Log("Mouse button is down");
 
             //get mouse position
             Vector3 fingerPos = Vector3.zero;
