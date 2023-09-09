@@ -219,7 +219,7 @@ MonoBehaviour:
   fireSpeed: 0.5
   timeLastFired: 0
   fireDistance: 20
-  projectilePrefab: {fileID: 0}
-  isActive: 0
+  projectilePrefab: {fileID: 4648390141078937785, guid: 71c4b03adf8b945e7850246dd1de022c, type: 3}
+  isActive: 1
   leader: {fileID: 0}
-  followSharpness: 0.1
+  followDistance: 1

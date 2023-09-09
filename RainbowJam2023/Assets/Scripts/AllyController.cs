@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AllyController : CharacterBase
 {  
-        public Transform leader;
+        private Transform leader;
         public float followDistance = .5f;
 
         public void Instantiate()
@@ -28,5 +28,15 @@ public class AllyController : CharacterBase
             Vector3 targetPos = leader.position + (transform.position - leader.position).normalized * followDistance;
             transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
 
+        }
+        
+        private void Update()
+        {
+            Fire();
+        }
+        
+        protected override CharacterBase GetTarget()
+        {
+            return GetClosestEnemy();
         }
 }
