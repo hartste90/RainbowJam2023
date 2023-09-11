@@ -13,6 +13,20 @@ public class CharacterBase : MonoBehaviour
     public float fireDistance = 20f;
     public GameObject projectilePrefab;
     public bool isActive;
+    public int totalHealth;
+    private int currentHealth;
+    public int CurrentHealth
+    {
+        get => currentHealth;
+        set
+        {
+            currentHealth = value;
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+        }
+    }
 
     public EnemyController GetClosestEnemy()
     {
@@ -66,6 +80,11 @@ public class CharacterBase : MonoBehaviour
     public static float GetDistance(Vector3 a, Vector3 b)
     {
         return Vector3.Distance(a, b);
+    }
+
+    protected virtual void Die()
+    {
+        Debug.Log(this.name + " died");
     }
     
 }

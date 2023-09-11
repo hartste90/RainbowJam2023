@@ -64,5 +64,16 @@ public class PlayerManager : CharacterBase
         ally.Instantiate();
         allies.Add(ally);
     }
+
+    protected override void Die()
+    {
+        Debug.Log("Player died");
+        
+    }
+
+    public void RestPlayer()
+    {
+        CurrentHealth = totalHealth;
+    }
     
 }
