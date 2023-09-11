@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerManager : CharacterBase
 {
+    
     public static PlayerManager Instance { get; private set; }
     private void Awake()
     {
@@ -14,6 +15,7 @@ public class PlayerManager : CharacterBase
             return;
         }
         Instance = this;
+        Instantiate();
     }
     
     public List<AllyController> allies = new List<AllyController>();
@@ -67,13 +69,16 @@ public class PlayerManager : CharacterBase
 
     protected override void Die()
     {
-        Debug.Log("Player died");
+        GameManager.Instance.OnPlayerDied();
         
     }
 
     public void RestPlayer()
     {
         CurrentHealth = totalHealth;
+        
     }
+
+
     
 }

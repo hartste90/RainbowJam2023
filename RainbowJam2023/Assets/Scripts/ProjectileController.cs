@@ -29,9 +29,10 @@ public class ProjectileController : MonoBehaviour
         if (direction != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, direction * 100f, speed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, target.transform.position) < hitDistance)
+            if (target != null && Vector3.Distance(transform.position, target.transform.position) < hitDistance)
             {
                 //TODO: apply damage to target
+                target.TakeDamage(damage);
                 Destroy(gameObject);
             }
         }

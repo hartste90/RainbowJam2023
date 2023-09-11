@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UI.ProceduralImage;
 
 public class CharacterBase : MonoBehaviour
 {
@@ -13,6 +16,8 @@ public class CharacterBase : MonoBehaviour
     public float fireDistance = 20f;
     public GameObject projectilePrefab;
     public bool isActive;
+    
+    public ProceduralImage healthBar;
     public int totalHealth;
     private int currentHealth;
     public int CurrentHealth
@@ -21,11 +26,26 @@ public class CharacterBase : MonoBehaviour
         set
         {
             currentHealth = value;
+            if(healthBar!=null)
+            {
+                healthBar.fillAmount = (float)currentHealth / (float)totalHealth;
+            }
+
             if (currentHealth <= 0)
             {
                 Die();
             }
         }
+    }
+
+    private void Awake()
+    {
+        Instantiate();
+    }
+
+    protected void Instantiate()
+    {
+        currentHealth = totalHealth;
     }
 
     public EnemyController GetClosestEnemy()
@@ -84,7 +104,15 @@ public class CharacterBase : MonoBehaviour
 
     protected virtual void Die()
     {
-        Debug.Log(this.name + " died");
+        Debug.Log("virtual method should be overridden for this character");
     }
-    
+
+    public virtual void TakeDamage(float damage)
+    {
+        CurrentHealth -= (int)damage;
+        if (CurrentHealth <= 0)
+        {
+            Die();
+        }
+    }
 }

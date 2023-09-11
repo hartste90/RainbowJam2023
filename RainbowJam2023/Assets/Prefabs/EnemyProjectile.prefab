@@ -131,5 +131,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   damage: 10
-  hitDistance: 0.1
+  hitDistance: 0.75
   aliveTime: 10

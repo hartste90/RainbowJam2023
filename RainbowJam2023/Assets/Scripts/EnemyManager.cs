@@ -41,6 +41,10 @@ public class EnemyManager : MonoBehaviour
     {
         return enemies;
     }
-    
-    
+
+
+    public void RemoveEnemy(EnemyController enemyController)
+    {
+        enemies.Remove(enemyController);
+    }
 }

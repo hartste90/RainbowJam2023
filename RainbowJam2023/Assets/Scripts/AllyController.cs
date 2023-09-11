@@ -39,4 +39,9 @@ public class AllyController : CharacterBase
         {
             return GetClosestEnemy();
         }
+        
+        public override void TakeDamage(float damage)
+        {
+            //allies don't take damage right now
+        }
 }

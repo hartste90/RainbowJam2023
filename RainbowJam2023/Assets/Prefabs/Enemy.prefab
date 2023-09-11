@@ -221,3 +221,5 @@ MonoBehaviour:
   fireDistance: 20
   projectilePrefab: {fileID: 0}
   isActive: 1
+  healthBar: {fileID: 0}
+  totalHealth: 50

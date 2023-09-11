@@ -17,4 +17,10 @@ public class EnemyController : CharacterBase
             return PlayerManager.Instance.GetPlayer();
         return null;
     }
+    
+    protected override void Die()
+    {
+        EnemyManager.Instance.RemoveEnemy(this);
+        Destroy(gameObject);
+    }
 }
