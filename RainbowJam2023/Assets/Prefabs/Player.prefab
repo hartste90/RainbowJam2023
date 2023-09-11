@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1492976565886111222}
   - component: {fileID: 2990968436915468911}
+  - component: {fileID: -6121110755402818927}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -53,7 +54,20 @@ MonoBehaviour:
   fireDistance: 20
   projectilePrefab: {fileID: 4648390141078937785, guid: 7dd297d95f19e48979758f98ee1f076d, type: 3}
   isActive: 1
+  allies: []
   allyPrefab: {fileID: 765210750283234912, guid: 6758566f0479a4a669a4b5f05c4dd45a, type: 3}
+--- !u!114 &-6121110755402818927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54856081209134381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a5e2891296c44c6ba61b5fb026bc42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4761561917204485340
 GameObject:
   m_ObjectHideFlags: 0
