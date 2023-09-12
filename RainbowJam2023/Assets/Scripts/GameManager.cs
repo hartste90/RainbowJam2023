@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {    
     
     public GameObject playerDiedModal;
+    public GameObject tutorialModal;
 
     public static GameManager Instance { get; private set; }
     private void Awake()
@@ -24,6 +25,12 @@ public class GameManager : MonoBehaviour
         PauseGame();
         //show game over screen
         playerDiedModal.SetActive(true);
+    }
+
+    public void ShowTutorialModal()
+    {
+        tutorialModal.SetActive(true);
+        PauseGame();
     }
     
     public void PauseGame()
