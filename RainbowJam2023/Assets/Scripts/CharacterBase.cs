@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine.UI.ProceduralImage;
-
+using DG.Tweening;
 public class CharacterBase : MonoBehaviour
 {
     public float maxDistance = 100f;
@@ -14,12 +15,16 @@ public class CharacterBase : MonoBehaviour
     public float fireSpeed = 0.5f;
     public float timeLastFired = 0f;
     public float fireDistance = 20f;
+    public float knockbackResistance = 0f;
     public GameObject projectilePrefab;
     public bool isActive;
     
     public ProceduralImage healthBar;
+    public ProceduralImage healthBarOverlay;
     public int totalHealth;
     private int currentHealth;
+    public float noticeDistance = 2f;
+
     public int CurrentHealth
     {
         get => currentHealth;
@@ -43,7 +48,7 @@ public class CharacterBase : MonoBehaviour
         Instantiate();
     }
 
-    protected void Instantiate()
+    protected virtual void Instantiate()
     {
         currentHealth = totalHealth;
     }
@@ -56,19 +61,22 @@ public class CharacterBase : MonoBehaviour
         float closestDistance = float.MaxValue;
         foreach (EnemyController enemy in enemies)
         {
-            float dist = GetDistance(transform.position, enemy.transform.position);
-            if(dist < fireDistance)
+            if (enemy.isActive)
             {
-                if(closestEnemy == null)
+                float dist = GetDistance(transform.position, enemy.transform.position);
+                if (dist < fireDistance)
                 {
-                    closestEnemy = enemy;
-                }
-                else
-                {
-                    if(dist < closestDistance)
+                    if (closestEnemy == null)
                     {
                         closestEnemy = enemy;
-                        closestDistance = dist;
+                    }
+                    else
+                    {
+                        if (dist < closestDistance)
+                        {
+                            closestEnemy = enemy;
+                            closestDistance = dist;
+                        }
                     }
                 }
             }
@@ -107,12 +115,23 @@ public class CharacterBase : MonoBehaviour
         Debug.Log("virtual method should be overridden for this character");
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(ProjectileController projectile, float damage)
     {
         CurrentHealth -= (int)damage;
         if (CurrentHealth <= 0)
         {
             Die();
         }
+        //knockback
+        Vector3 direction = transform.position - projectile.transform.position;
+        direction.y = 0;
+        direction.Normalize();
+        transform.position += direction * projectile.knockback * (1-knockbackResistance);
+        //healthbar effect
+        healthBarOverlay.color =
+            new Color(healthBarOverlay.color.r, healthBarOverlay.color.g, healthBarOverlay.color.b, 1);
+        healthBarOverlay.DOFade(0f, .1f);
+
+
     }
 }

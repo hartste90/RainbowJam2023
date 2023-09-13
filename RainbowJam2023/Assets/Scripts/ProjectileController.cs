@@ -12,6 +12,7 @@ public class ProjectileController : MonoBehaviour
     private Vector3 direction;
     private CharacterBase target;
     private float spawnTime;
+    public float knockback = .5f;
     
     public void Instantiate(CharacterBase targetSet)
     {
@@ -32,7 +33,7 @@ public class ProjectileController : MonoBehaviour
             if (target != null && Vector3.Distance(transform.position, target.transform.position) < hitDistance)
             {
                 //TODO: apply damage to target
-                target.TakeDamage(damage);
+                target.TakeDamage(this, damage);
                 Destroy(gameObject);
             }
         }

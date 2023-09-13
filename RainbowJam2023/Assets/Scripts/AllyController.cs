@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AllyStatus
+{
+    None = 0,
+    Bullied = 1,
+    Following = 2,
+}
 public class AllyController : CharacterBase
 {  
         private Transform leader;
         public float followDistance = .5f;
-
-        public void Instantiate()
+        public AllyStatus allyStatus;
+        
+        public int allyIndex;
+        public new void Instantiate()
         {
             if (PlayerManager.Instance.GetPlayer().allies.Count == 0)
             {
@@ -22,11 +30,24 @@ public class AllyController : CharacterBase
         }
         
 
-        void LateUpdate () 
+        void LateUpdate ()
         {
-            //lerp towards leader
-            Vector3 targetPos = leader.position + (transform.position - leader.position).normalized * followDistance;
-            transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+            if (leader != null)
+            {
+                   //lerp towards leader
+                Vector3 targetPos =
+                    leader.position + (transform.position - leader.position).normalized * followDistance;
+                transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+            }
+            else
+            {
+                if (Vector3.Distance(PlayerManager.Instance.GetPlayer().transform.position, transform.position) < noticeDistance)
+                {
+                    GameManager.Instance.ShowAllyPickupModal(allyIndex);
+                    leader = PlayerManager.Instance.GetPlayer().transform;
+                    allyStatus = AllyStatus.Following;
+                }
+            }
 
         }
         
@@ -40,7 +61,7 @@ public class AllyController : CharacterBase
             return GetClosestEnemy();
         }
         
-        public override void TakeDamage(float damage)
+        public override void TakeDamage(ProjectileController projectile, float damage)
         {
             //allies don't take damage right now
         }

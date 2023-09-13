@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     
     public GameObject playerDiedModal;
     public GameObject tutorialModal;
+    public List<GameObject> allyPickupModals;
+    public List<GameObject> enemyPickupModals;
+
 
     public static GameManager Instance { get; private set; }
     private void Awake()
@@ -44,4 +47,21 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void ShowAllyPickupModal(int allyIndex)
+    {
+        if (allyPickupModals.Count > allyIndex)
+        {
+            allyPickupModals[allyIndex].SetActive(true);
+            PauseGame();
+        }
+    }
+
+    public void ShowEnemyModal(int enemyIndex)
+    {
+        if (enemyPickupModals.Count > enemyIndex)
+        {
+            enemyPickupModals[enemyIndex].SetActive(true);
+            PauseGame();
+        }
+    }
 }
