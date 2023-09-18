@@ -63,7 +63,7 @@ public class PlayerManager : CharacterBase
     public void SpawnAlly()
     {
         AllyController ally = Instantiate(allyPrefab, transform.position + Vector3.left * 2f, Quaternion.identity).GetComponent<AllyController>();
-        ally.Instantiate();
+        ally.Spawn();
         allies.Add(ally);
     }
 

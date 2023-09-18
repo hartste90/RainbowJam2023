@@ -53,7 +53,11 @@ public class EnemyController : CharacterBase
         enemyGroup.Remove(this);
         if (enemyGroup.Count == 0)
         {
-            // bulliedAlly.
+            //all enemies in group are dead
+            if (bulliedAlly != null)
+            {
+                bulliedAlly.Unbully();
+            }
         }
         Destroy(gameObject);
     }

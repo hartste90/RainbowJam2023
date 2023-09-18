@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
  
@@ -6,8 +7,11 @@ public class PlayerMovement : MonoBehaviour {
     // public float shiftAdd = 250.0f; //multiplied by how long shift is held.  Basically running
     // public float maxShift = 1000.0f; //Maximum speed when holdin gshift
     private float totalRun= 1.0f;
+
+    private Vector3 lastPosition;
      
     void Update () {
+        lastPosition = transform.position;
         //Keyboard commands
         float f = 0.0f;
         Vector3 p = GetBaseInput();
@@ -24,18 +28,33 @@ public class PlayerMovement : MonoBehaviour {
           }
          
           p = p * Time.deltaTime;
-          Vector3 newPosition = transform.position;
-          if (Input.GetKey(KeyCode.Space)){ //If player wants to move on X and Z axis only
-              transform.Translate(p);
-              newPosition.x = transform.position.x;
-              newPosition.z = transform.position.z;
-              transform.position = newPosition;
-          } else {
-              transform.Translate(p);
-          }
+          transform.Translate(p);
         }
     }
-     
+
+    private void LateUpdate()
+    {
+        Collider2D coll = GetComponent<Collider2D>();
+        Debug.Log(coll);
+        if (Physics2D.IsTouchingLayers(coll))
+        {
+            Debug.Log("converging");
+            PushbackPlayerPosition(coll);
+        }
+        else
+        {
+            Debug.Log("not convergings");
+        }
+    }
+
+    private void PushbackPlayerPosition(Collider2D coll)
+    {
+        Vector2 direction = transform.position - coll.transform.position;
+        direction.y = 0;
+        direction.Normalize();
+        transform.position += (Vector3)direction * 1f;
+    }
+
     private Vector3 GetBaseInput() { //returns the basic values, if it's 0 than it's not active.
         Vector3 p_Velocity = new Vector3();
         if (Input.GetKey (KeyCode.W)){

@@ -7,6 +7,7 @@ public enum AllyStatus
     None = 0,
     Bullied = 1,
     Following = 2,
+    Waiting = 3,
 }
 public class AllyController : CharacterBase
 {  
@@ -15,18 +16,9 @@ public class AllyController : CharacterBase
         public AllyStatus allyStatus;
         
         public int allyIndex;
-        public new void Instantiate()
+        public new void Spawn()
         {
-            if (PlayerManager.Instance.GetPlayer().allies.Count == 0)
-            {
-                Debug.Log("Spawned first ally");
-                leader = PlayerManager.Instance.GetPlayer().transform;
-            }
-            else
-            {
-                Debug.Log("Spawned ally");
-                leader = PlayerManager.Instance.GetPlayer().allies[^1].transform;
-            }
+            BeginFollowingPlayer();
         }
         
 
@@ -39,13 +31,12 @@ public class AllyController : CharacterBase
                     leader.position + (transform.position - leader.position).normalized * followDistance;
                 transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
             }
-            else
+            else if (allyStatus == AllyStatus.Waiting)
             {
                 if (Vector3.Distance(PlayerManager.Instance.GetPlayer().transform.position, transform.position) < noticeDistance)
                 {
                     GameManager.Instance.ShowAllyPickupModal(allyIndex);
-                    leader = PlayerManager.Instance.GetPlayer().transform;
-                    allyStatus = AllyStatus.Following;
+                    BeginFollowingPlayer();
                 }
             }
 
@@ -53,7 +44,10 @@ public class AllyController : CharacterBase
         
         private void Update()
         {
-            Fire();
+            if (allyStatus == AllyStatus.Following)
+            {
+                Fire();
+            }
         }
         
         protected override CharacterBase GetTarget()
@@ -64,5 +58,27 @@ public class AllyController : CharacterBase
         public override void TakeDamage(ProjectileController projectile, float damage)
         {
             //allies don't take damage right now
+        }
+
+        public void BeginFollowingPlayer()
+        {
+            allyStatus = AllyStatus.Following;
+            if (PlayerManager.Instance.GetPlayer().allies.Count == 0)
+            {
+                Debug.Log("Spawned first ally");
+                leader = PlayerManager.Instance.GetPlayer().transform;
+            }
+            else
+            {
+                Debug.Log("Spawned ally");
+                leader = PlayerManager.Instance.GetPlayer().allies[^1].transform;
+            }
+            PlayerManager.Instance.allies.Add(this);
+            GameManager.Instance.ShowAllyPickupModal(allyIndex);
+        }
+
+        public void Unbully()
+        {
+            allyStatus = AllyStatus.Waiting;
         }
 }
