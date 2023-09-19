@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ProjectileController : MonoBehaviour
 {
@@ -13,13 +15,16 @@ public class ProjectileController : MonoBehaviour
     private CharacterBase target;
     private float spawnTime;
     public float knockback = .5f;
+    public float rotateSpeed = 1f;
     
     public void Instantiate(CharacterBase targetSet)
     {
         target = targetSet;
         direction = targetSet.transform.position - transform.position;
         spawnTime = Time.time;
-        
+        transform.Rotate(Vector3.forward * Random.Range(0, 360));
+        transform.DOLocalRotate(Vector3.forward * -360, rotateSpeed, RotateMode.FastBeyond360).SetLoops(-1);
+
     }
 
     private void Update()

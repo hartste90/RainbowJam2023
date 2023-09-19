@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21960786, g: 0.6509804, b: 0.2627451, a: 1}
+  m_Color: {r: 0.6509804, g: 0.21960782, b: 0.43345994, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -289,7 +289,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 7
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1769397307
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &5608135817278777062
@@ -659,3 +659,4 @@ MonoBehaviour:
   noticeDistance: 10
   enemyIndex: -1
   enemyGroup: []
+  bulliedAlly: {fileID: 0}

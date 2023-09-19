@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public enum AllyStatus
@@ -14,17 +17,25 @@ public class AllyController : CharacterBase
         private Transform leader;
         public float followDistance = .5f;
         public AllyStatus allyStatus;
+        public GameObject helpTextContainer;
+        public TextMeshProUGUI helpText;
         
         public int allyIndex;
         public new void Spawn()
         {
             BeginFollowingPlayer();
         }
-        
+
+        private void Start()
+        {
+            if(allyStatus == AllyStatus.Bullied || allyStatus == AllyStatus.Waiting)
+                PlayHelpAnimation();
+        }
+
 
         void LateUpdate ()
         {
-            if (leader != null)
+            if (leader != null && allyStatus == AllyStatus.Following)
             {
                    //lerp towards leader
                 Vector3 targetPos =
@@ -37,6 +48,10 @@ public class AllyController : CharacterBase
                 {
                     GameManager.Instance.ShowAllyPickupModal(allyIndex);
                     BeginFollowingPlayer();
+                    if (GameManager.Instance.IsAllAlliesFollowing())
+                    {
+                        GameManager.Instance.WinGame();
+                    }
                 }
             }
 
@@ -62,6 +77,7 @@ public class AllyController : CharacterBase
 
         public void BeginFollowingPlayer()
         {
+            helpTextContainer.SetActive(false);
             allyStatus = AllyStatus.Following;
             if (PlayerManager.Instance.GetPlayer().allies.Count == 0)
             {
@@ -81,4 +97,18 @@ public class AllyController : CharacterBase
         {
             allyStatus = AllyStatus.Waiting;
         }
+
+        public override void PlayJumpingAnimation()
+        {
+            allyStatus = AllyStatus.None;
+            base.PlayJumpingAnimation();
+        }
+
+        private void PlayHelpAnimation()
+        {
+            helpTextContainer.SetActive(true);
+            helpText.transform.DOLocalJump(Vector3.zero, 10f, 1, 1f)
+                .SetLoops(-1).SetDelay(1f).SetEase(Ease.OutBounce);
+        }
+
 }

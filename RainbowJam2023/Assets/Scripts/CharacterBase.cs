@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine.UI.ProceduralImage;
 using DG.Tweening;
+using Random = UnityEngine.Random;
+
 public class CharacterBase : MonoBehaviour
 {
     public float maxDistance = 100f;
@@ -133,5 +135,14 @@ public class CharacterBase : MonoBehaviour
         healthBarOverlay.DOFade(0f, .1f);
 
 
+    }
+
+    public virtual void PlayJumpingAnimation()
+    {
+        Sequence s = DOTween.Sequence();
+        s.Append(transform.DOLocalJump(transform.position, 1f, 1, .5f));
+        s.AppendInterval(Random.Range(.3f, 1f));
+        s.SetLoops(-1);
+        s.Play();
     }
 }
