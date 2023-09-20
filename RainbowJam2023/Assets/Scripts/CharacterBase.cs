@@ -91,7 +91,7 @@ public class CharacterBase : MonoBehaviour
         throw new System.NotImplementedException();
     }
 
-    protected void Fire()
+    protected virtual ProjectileController Fire()
     {
         //check if we should fire
         if (Time.time - timeLastFired > fireSpeed)
@@ -103,8 +103,10 @@ public class CharacterBase : MonoBehaviour
                 ProjectileController projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity)
                     .GetComponent<ProjectileController>();
                 projectile.Instantiate(closestEnemy);
+                return projectile;
             }
         }
+        return null;
     }
     
     public static float GetDistance(Vector3 a, Vector3 b)

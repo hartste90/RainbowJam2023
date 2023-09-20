@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerManager : CharacterBase
 {
+    private int lastColorIdx = 0;
     
     public static PlayerManager Instance { get; private set; }
     private void Awake()
@@ -29,6 +30,17 @@ public class PlayerManager : CharacterBase
     void Update()
     {
         Fire();
+    }
+
+    protected override ProjectileController Fire()
+    {
+        PlayerProjectileController projectile = base.Fire() as PlayerProjectileController;
+        if (projectile != null)
+        {
+            projectile.SetColor(lastColorIdx);
+            lastColorIdx++;
+        }
+        return projectile;
     }
 
     protected override CharacterBase GetTarget()

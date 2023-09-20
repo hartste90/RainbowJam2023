@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
     public void ShowAllyPickupModal(int allyIndex)
     {
-        if (allyPickupModals.Count > allyIndex)
+        if (allyPickupModals.Count > allyIndex && allyIndex >= 0)
         {
             allyPickupModals[allyIndex].Show();
         }
