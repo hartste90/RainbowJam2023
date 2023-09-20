@@ -19,6 +19,8 @@ public class AllyController : CharacterBase
         public AllyStatus allyStatus;
         public GameObject helpTextContainer;
         public TextMeshProUGUI helpText;
+        public GameObject openEyesContainer;
+        public GameObject closedEyesContainer;
         
         public int allyIndex;
         public new void Spawn()
@@ -77,6 +79,7 @@ public class AllyController : CharacterBase
 
         public void BeginFollowingPlayer()
         {
+            OpenEyes();
             helpTextContainer.SetActive(false);
             allyStatus = AllyStatus.Following;
             if (PlayerManager.Instance.GetPlayer().allies.Count == 0)
@@ -95,6 +98,7 @@ public class AllyController : CharacterBase
 
         public void Unbully()
         {
+            OpenEyes();
             allyStatus = AllyStatus.Waiting;
         }
 
@@ -106,9 +110,22 @@ public class AllyController : CharacterBase
 
         private void PlayHelpAnimation()
         {
+            CloseEyes();
             helpTextContainer.SetActive(true);
             helpText.transform.DOLocalJump(Vector3.zero, 20f, 1, 1f)
                 .SetLoops(-1).SetDelay(1f).SetEase(Ease.OutBounce);
+        }
+
+        public void CloseEyes()
+        {
+            openEyesContainer.SetActive(false);
+            closedEyesContainer.SetActive(true);
+        }
+        
+        public void OpenEyes()
+        {
+            openEyesContainer.SetActive(true);
+            closedEyesContainer.SetActive(false);
         }
 
 }

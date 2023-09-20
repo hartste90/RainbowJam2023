@@ -69,6 +69,7 @@ public class PlayerManager : CharacterBase
 
     public void DisableGameplayInput()
     {
+        GetComponent<PlayerMovement>().rb.velocity = Vector3.zero;
         GetComponent<PlayerMovement>().enabled = false;
     }
 }
