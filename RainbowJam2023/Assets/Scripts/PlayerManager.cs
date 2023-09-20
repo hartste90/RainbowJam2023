@@ -52,7 +52,6 @@ public class PlayerManager : CharacterBase
     public void RestPlayer()
     {
         CurrentHealth = totalHealth;
-        
     }
 
 

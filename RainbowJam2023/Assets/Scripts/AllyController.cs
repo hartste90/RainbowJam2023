@@ -90,7 +90,7 @@ public class AllyController : CharacterBase
                 leader = PlayerManager.Instance.GetPlayer().allies[^1].transform;
             }
             PlayerManager.Instance.allies.Add(this);
-            GameManager.Instance.ShowAllyPickupModal(allyIndex);
+            // GameManager.Instance.ShowAllyPickupModal(allyIndex);
         }
 
         public void Unbully()
@@ -107,7 +107,7 @@ public class AllyController : CharacterBase
         private void PlayHelpAnimation()
         {
             helpTextContainer.SetActive(true);
-            helpText.transform.DOLocalJump(Vector3.zero, 10f, 1, 1f)
+            helpText.transform.DOLocalJump(Vector3.zero, 20f, 1, 1f)
                 .SetLoops(-1).SetDelay(1f).SetEase(Ease.OutBounce);
         }
 

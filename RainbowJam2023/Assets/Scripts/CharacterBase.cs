@@ -145,4 +145,19 @@ public class CharacterBase : MonoBehaviour
         s.SetLoops(-1);
         s.Play();
     }
+    
+    // void OnTriggerEnter2D(Collider2D col)
+    // {
+    //     Debug.Log("Trigger entered2: " + col.gameObject.name);
+    //     if (this is EnemyController && col.gameObject.tag == "Enemy")
+    //     {
+    //         TakeDamage(col.GetComponent<ProjectileController>(), col.GetComponent<ProjectileController>().damage);
+    //         Destroy(gameObject);
+    //     }
+    //     else if (this is PlayerManager && col.gameObject.tag == "Player")
+    //     {
+    //         TakeDamage(col.GetComponent<ProjectileController>(), col.GetComponent<ProjectileController>().damage);
+    //         Destroy(gameObject);
+    //     }
+    // }
 }

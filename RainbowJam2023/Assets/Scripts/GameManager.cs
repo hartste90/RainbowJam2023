@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {    
     
-    public GameObject playerDiedModal;
-    public GameObject tutorialModal;
-    public GameObject gameCompletedModal;
-    public List<GameObject> allyPickupModals;
-    public List<GameObject> enemyPickupModals;
+    public DialogueModalController playerDiedModal;
+    public DialogueModalController tutorialModal;
+    public DialogueModalController gameCompletedModal;
+    public List<DialogueModalController> allyPickupModals;
+    public List<DialogueModalController> enemyPickupModals;
     public GameObject sparklerGO;
 
     private int totalAllyCount;
@@ -31,24 +31,24 @@ public class GameManager : MonoBehaviour
     public void OnPlayerDied()
     {
         //pause game
-        PauseGame();
         //show game over screen
-        playerDiedModal.SetActive(true);
+        playerDiedModal.Show();
     }
 
     public void ShowTutorialModal()
     {
-        tutorialModal.SetActive(true);
-        PauseGame();
+        tutorialModal.Show();
     }
     
     public void PauseGame()
     {
+        Debug.Log("Paused");
         Time.timeScale = 0;
     }
 
     public void UnpauseGame()
     {
+        Debug.Log("Unpaused");
         Time.timeScale = 1;
     }
 
@@ -57,8 +57,7 @@ public class GameManager : MonoBehaviour
     {
         if (allyPickupModals.Count > allyIndex)
         {
-            allyPickupModals[allyIndex].SetActive(true);
-            PauseGame();
+            allyPickupModals[allyIndex].Show();
         }
     }
 
@@ -66,15 +65,14 @@ public class GameManager : MonoBehaviour
     {
         if (enemyPickupModals.Count > enemyIndex)
         {
-            enemyPickupModals[enemyIndex].SetActive(true);
-            PauseGame();
+            enemyPickupModals[enemyIndex].Show();
         }
     }
 
     public void WinGame()
     {
         //show the win screen
-        gameCompletedModal.SetActive(true);
+        gameCompletedModal.Show();
         sparklerGO.SetActive(true);
         for(int i = 0; i < PlayerManager.Instance.allies.Count; i++)
         {
