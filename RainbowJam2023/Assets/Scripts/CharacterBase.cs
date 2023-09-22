@@ -116,25 +116,32 @@ public class CharacterBase : MonoBehaviour
 
     protected virtual void Die()
     {
+        SoundManager.Instance.PlayDeathClip();
         Debug.Log("virtual method should be overridden for this character");
     }
 
     public virtual void TakeDamage(ProjectileController projectile, float damage)
     {
+        
         CurrentHealth -= (int)damage;
         if (CurrentHealth <= 0)
         {
             Die();
         }
-        //knockback
-        Vector3 direction = transform.position - projectile.transform.position;
-        direction.y = 0;
-        direction.Normalize();
-        transform.position += direction * projectile.knockback * (1-knockbackResistance);
-        //healthbar effect
-        healthBarOverlay.color =
-            new Color(healthBarOverlay.color.r, healthBarOverlay.color.g, healthBarOverlay.color.b, 1);
-        healthBarOverlay.DOFade(0f, .1f);
+        else
+        {
+            SoundManager.Instance.PlayHitClip();
+            //knockback
+            Vector3 direction = transform.position - projectile.transform.position;
+            direction.y = 0;
+            direction.Normalize();
+            transform.position += direction * projectile.knockback * (1-knockbackResistance);
+            //healthbar effect
+            healthBarOverlay.color =
+                new Color(healthBarOverlay.color.r, healthBarOverlay.color.g, healthBarOverlay.color.b, 1);
+            healthBarOverlay.DOFade(0f, .1f);
+        }
+        
 
 
     }

@@ -58,12 +58,12 @@ public class PlayerManager : CharacterBase
     protected override void Die()
     {
         GameManager.Instance.OnPlayerDied();
-        
     }
 
     public void RestPlayer()
     {
         CurrentHealth = totalHealth;
+        SoundManager.Instance.PlayNewLifeClip();
     }
 
 

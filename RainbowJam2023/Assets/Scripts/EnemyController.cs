@@ -49,6 +49,7 @@ public class EnemyController : CharacterBase
     
     protected override void Die()
     {
+        base.Die();
         EnemyManager.Instance.RemoveEnemy(this);
         enemyGroup.Remove(this);
         if (enemyGroup.Count == 0)

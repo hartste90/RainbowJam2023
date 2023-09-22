@@ -16,7 +16,7 @@ public class ProjectileController : MonoBehaviour
     private float spawnTime;
     public float knockback = .5f;
     public float rotateSpeed = 1f;
-    
+    public SpriteRenderer spriteRenderer;
     public void Instantiate(CharacterBase targetSet)
     {
         target = targetSet;
@@ -60,6 +60,11 @@ public class ProjectileController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    
+    public void SetColor(Color color)
+    {
+        spriteRenderer.color = color;
     }
 
     private void OnDestroy()

@@ -7,26 +7,29 @@ using UnityEngine;
 
 public class ModalBase : MonoBehaviour
 {
-    CanvasGroup canvasGroup;
+    protected CanvasGroup canvasGroup;
 
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void Show()
+    public virtual void Show()
     {
         gameObject.SetActive(true);
-        canvasGroup.alpha = 1;
-        canvasGroup.DOFade(1f, .2f)
-            .OnComplete(()=> 
-                GameManager.Instance.PauseGame());
-        
-
+        canvasGroup.alpha = 0;
+        canvasGroup.interactable = false;
+        canvasGroup.DOFade(1f, .25f)
+            .OnComplete(() =>
+            {
+                canvasGroup.interactable = true;
+                GameManager.Instance.PauseGame();
+            });
     }
-    public void Hide()
+    public virtual void Hide()
     {
         GameManager.Instance.UnpauseGame();
-        canvasGroup.DOFade(0, .1f).OnComplete(() => gameObject.SetActive(false));
+        canvasGroup.interactable = false;
+        canvasGroup.DOFade(0, .2f).OnComplete(() => gameObject.SetActive(false));
     }
 }

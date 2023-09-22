@@ -52,13 +52,21 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-
-    public void ShowAllyPickupModal(int allyIndex)
+    
+/// <summary>
+/// Returns true if the modal was shown
+/// </summary>
+/// <param name="allyIndex"></param>
+/// <returns></returns>
+    public bool ShowAllyPickupModal(int allyIndex)
     {
         if (allyPickupModals.Count > allyIndex && allyIndex >= 0)
         {
             allyPickupModals[allyIndex].Show();
+            return true;
         }
+
+        return false;
     }
 
     public void ShowEnemyModal(int enemyIndex)
@@ -92,5 +100,15 @@ public class GameManager : MonoBehaviour
     public void ReloadGame()
     {
         SceneManager.LoadScene("TitleScene");
+    }
+    
+    public void PlayGainedAllySound()
+    {
+        SoundManager.Instance.PlayGainedFollowerClip();
+    }
+    
+    public void PlayUiClickSound()
+    {
+        SoundManager.Instance.PlayUISoundClip();
     }
 }

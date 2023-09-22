@@ -1077,6 +1077,8 @@ MonoBehaviour:
   healthBarOverlay: {fileID: 0}
   totalHealth: 0
   noticeDistance: 2
+  allyColor: {r: 0, g: 0, b: 0, a: 0}
+  spriteRenderer: {fileID: 6227719653033919467}
   followDistance: 1
   allyStatus: 0
   helpTextContainer: {fileID: 1730331537405235191}

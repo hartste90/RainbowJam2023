@@ -13,7 +13,9 @@ public enum AllyStatus
     Waiting = 3,
 }
 public class AllyController : CharacterBase
-{  
+{
+    public Color allyColor;
+    public SpriteRenderer spriteRenderer;
         private Transform leader;
         public float followDistance = .5f;
         public AllyStatus allyStatus;
@@ -32,6 +34,7 @@ public class AllyController : CharacterBase
         {
             if(allyStatus == AllyStatus.Bullied || allyStatus == AllyStatus.Waiting)
                 PlayHelpAnimation();
+            spriteRenderer.color = allyColor;
         }
 
 
@@ -48,7 +51,9 @@ public class AllyController : CharacterBase
             {
                 if (Vector3.Distance(PlayerManager.Instance.GetPlayer().transform.position, transform.position) < noticeDistance)
                 {
-                    GameManager.Instance.ShowAllyPickupModal(allyIndex);
+                    bool modalExists = GameManager.Instance.ShowAllyPickupModal(allyIndex);
+                    if(!modalExists)
+                        SoundManager.Instance.PlayGainedFollowerClip();
                     BeginFollowingPlayer();
                     if (GameManager.Instance.IsAllAlliesFollowing())
                     {
@@ -65,6 +70,16 @@ public class AllyController : CharacterBase
             {
                 Fire();
             }
+        }
+        
+        protected override ProjectileController Fire()
+        {
+            ProjectileController projectile = base.Fire();
+            if (projectile != null)
+            {
+                projectile.SetColor(allyColor);
+            }
+            return projectile;
         }
         
         protected override CharacterBase GetTarget()
