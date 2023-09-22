@@ -11,6 +11,7 @@ public enum AllyStatus
     Bullied = 1,
     Following = 2,
     Waiting = 3,
+    Jumping = 4,
 }
 public class AllyController : CharacterBase
 {
@@ -119,7 +120,7 @@ public class AllyController : CharacterBase
 
         public override void PlayJumpingAnimation()
         {
-            allyStatus = AllyStatus.None;
+            allyStatus = AllyStatus.Jumping;
             base.PlayJumpingAnimation();
         }
 

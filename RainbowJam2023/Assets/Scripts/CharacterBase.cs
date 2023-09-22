@@ -122,7 +122,8 @@ public class CharacterBase : MonoBehaviour
 
     public virtual void TakeDamage(ProjectileController projectile, float damage)
     {
-        
+        if (CurrentHealth <= 0)
+            return;
         CurrentHealth -= (int)damage;
         if (CurrentHealth <= 0)
         {
@@ -141,15 +142,13 @@ public class CharacterBase : MonoBehaviour
                 new Color(healthBarOverlay.color.r, healthBarOverlay.color.g, healthBarOverlay.color.b, 1);
             healthBarOverlay.DOFade(0f, .1f);
         }
-        
-
-
     }
 
     public virtual void PlayJumpingAnimation()
     {
+        DOTween.Kill(this.transform);
         Sequence s = DOTween.Sequence();
-        s.Append(transform.DOLocalJump(transform.position, 1f, 1, .5f));
+        s.Append(transform.DOJump(transform.position, 1f, 1, .5f));
         s.AppendInterval(Random.Range(.3f, 1f));
         s.SetLoops(-1);
         s.Play();

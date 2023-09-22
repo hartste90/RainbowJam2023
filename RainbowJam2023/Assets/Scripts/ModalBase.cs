@@ -16,20 +16,24 @@ public class ModalBase : MonoBehaviour
 
     public virtual void Show()
     {
+        Debug.Log("Showing modal");
         gameObject.SetActive(true);
         canvasGroup.alpha = 0;
         canvasGroup.interactable = false;
-        canvasGroup.DOFade(1f, .25f)
+        canvasGroup.DOFade(1f, .15f)
             .OnComplete(() =>
             {
                 canvasGroup.interactable = true;
-                GameManager.Instance.PauseGame();
+                if (GameManager.Instance.isPaused == false)
+                {
+                    GameManager.Instance.PauseGame();
+                }
             });
     }
     public virtual void Hide()
     {
         GameManager.Instance.UnpauseGame();
         canvasGroup.interactable = false;
-        canvasGroup.DOFade(0, .2f).OnComplete(() => gameObject.SetActive(false));
+        canvasGroup.DOFade(0, .1f).OnComplete(() => gameObject.SetActive(false));
     }
 }

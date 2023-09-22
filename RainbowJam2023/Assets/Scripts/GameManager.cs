@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject sparklerGO;
 
     private int totalAllyCount;
+    public bool isPaused = false;
 
 
     public static GameManager Instance { get; private set; }
@@ -34,22 +35,19 @@ public class GameManager : MonoBehaviour
         //show game over screen
         playerDiedModal.Show();
     }
-
-    public void ShowTutorialModal()
-    {
-        tutorialModal.Show();
-    }
     
     public void PauseGame()
     {
         Debug.Log("Paused");
         Time.timeScale = 0;
+        isPaused = true;
     }
 
     public void UnpauseGame()
     {
         Debug.Log("Unpaused");
         Time.timeScale = 1;
+        isPaused = false;
     }
 
     
@@ -82,14 +80,16 @@ public class GameManager : MonoBehaviour
         //show the win screen
         gameCompletedModal.Show();
         sparklerGO.SetActive(true);
+        //turn off keyboard input
+        PlayerManager.Instance.DisableGameplayInput();
+        //move all allies to the player and jump
         for(int i = 0; i < PlayerManager.Instance.allies.Count; i++)
         {
             AllyController ally = PlayerManager.Instance.allies[i];
-            ally.transform.position = PlayerManager.Instance.transform.position + Vector3.right * (i + 1);
+            ally.transform.position = PlayerManager.Instance.transform.position + Vector3.left * (i + 1);
             ally.PlayJumpingAnimation();
         }
-        //turn off keyboard input
-        PlayerManager.Instance.DisableGameplayInput();
+        
     }
 
     public bool IsAllAlliesFollowing()
