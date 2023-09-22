@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private int totalAllyCount;
     public bool isPaused = false;
 
+    public List<ModalBase> seenModals = new List<ModalBase>();
 
     public static GameManager Instance { get; private set; }
     private void Awake()
@@ -60,8 +61,13 @@ public class GameManager : MonoBehaviour
     {
         if (allyPickupModals.Count > allyIndex && allyIndex >= 0)
         {
-            allyPickupModals[allyIndex].Show();
-            return true;
+            ModalBase m = allyPickupModals[allyIndex];
+            if (!seenModals.Contains(m))
+            {
+                allyPickupModals[allyIndex].Show();
+                seenModals.Add(m);
+                return true;
+            }
         }
 
         return false;
@@ -71,7 +77,12 @@ public class GameManager : MonoBehaviour
     {
         if (enemyPickupModals.Count > enemyIndex)
         {
-            enemyPickupModals[enemyIndex].Show();
+            ModalBase m = enemyPickupModals[enemyIndex];
+            if (!seenModals.Contains(m))
+            {
+                enemyPickupModals[enemyIndex].Show();
+                seenModals.Add(m);
+            }
         }
     }
 
